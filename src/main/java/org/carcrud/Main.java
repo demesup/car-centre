@@ -2,6 +2,6 @@ package org.carcrud;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        CarController.start();
     }
 }
