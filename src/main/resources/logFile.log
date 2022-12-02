@@ -1,0 +1,4 @@
+23:28:27.777 INFO  - Car controller started working
+23:28:56.744 INFO  - Car(s) is(are) updated if exist(s)
+23:29:23.550 INFO  - Car(s) is(are) deleted if exists
+23:29:32.346 INFO  - Car controller finished working

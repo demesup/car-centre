@@ -12,7 +12,7 @@
         </encoder>
     </appender>
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <file>D:\IdeaProjects\carcentre\src\main\resources\logFile.log</file>
+        <file>C:\Users\User\IdeaProjects\carcentre\src\main\resources\logFile.log</file>
         <append>true</append>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>INFO</level>
