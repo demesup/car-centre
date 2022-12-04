@@ -2,15 +2,13 @@ package org.carcrud;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.carcrud.model.Brand;
 import org.carcrud.model.Car;
 import org.carcrud.model.CarField;
-import org.carcrud.model.FuelType;
 import org.utils.exception.ExitException;
 
 import java.io.IOException;
-import java.util.*;
-import java.util.function.Consumer;
+import java.util.Arrays;
+import java.util.Map;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -25,19 +23,6 @@ import static org.utils.Utils.numberedArray;
 public class CarController {
     static CarController carController = new CarController();
     static CarRepository repository = new CarRepository();
-
-    public static HashMap<CarField, Consumer<Car>> setters = new HashMap<>();
-
-    static {
-        setters.put(CarField.VIN, car -> car.setVIN(CarField.VIN.valueFromUser()));
-        setters.put(CarField.FUEL_TYPE, car -> car.setFuelType(FuelType.valueOf(CarField.FUEL_TYPE.valueFromUser())));
-        setters.put(CarField.BRAND, car -> car.setBrand(Brand.valueOf(CarField.BRAND.valueFromUser())));
-        setters.put(CarField.MODEL, car -> car.setModel(CarField.MODEL.valueFromUser()));
-        setters.put(CarField.YEAR_OF, car -> car.setYearOf(Integer.parseInt(CarField.YEAR_OF.valueFromUser())));
-        setters.put(CarField.MILEAGE, car -> car.setMileage(Integer.parseInt(CarField.MILEAGE.valueFromUser())));
-        setters.put(CarField.STATE_NUMBER, car -> car.setStateNumber(CarField.STATE_NUMBER.valueFromUser()));
-        setters.put(CarField.ADDITIONAL_DESCRIPTION, car -> car.setAdditionalDescription(CarField.ADDITIONAL_DESCRIPTION.valueFromUser()));
-    }
 
     public static void start() {
         log.info("Car controller started working");
@@ -90,7 +75,7 @@ public class CarController {
 
     private void create() {
         Car car = new Car();
-        setters.values().forEach(setter -> setter.accept(car));
+        Arrays.stream(CarField.values()).forEach(f-> f.userSetter(car));
         repository.create(car);
         log.info(car + "is added to table if not exists");
     }

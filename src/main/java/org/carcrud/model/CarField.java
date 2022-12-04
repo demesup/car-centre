@@ -15,8 +15,13 @@ import static org.utils.Read.readString;
 public enum CarField {
     VIN(Car::getVIN) {
         @Override
+        public void userSetter(Car car) {
+            car.setVIN(this.valueFromUser());
+        }
+
+        @Override
         @SneakyThrows
-        public String valueFromUser()  {
+        public String valueFromUser() {
             return askStringWhileDoesNotMatchToPattern(
                     Pattern.compile("^(?i)[a-z0-9]{17}$"),
                     "Enter VIN(17 chars)");
@@ -24,60 +29,97 @@ public enum CarField {
     },
     FUEL_TYPE(Car::getFuelType) {
         @Override
+        public void userSetter(Car car) {
+            car.setFuelType(this.valueFromUser());
+        }
+
+        @Override
         @SneakyThrows
-        public String valueFromUser()  {
-            return readEnumValue(FuelType.values()).toString();
+        public FuelType valueFromUser() {
+            return readEnumValue(FuelType.values());
         }
     },
     BRAND(Car::getBrand) {
         @Override
         @SneakyThrows
-        public String valueFromUser()  {
-            return readEnumValue(Brand.values()).toString();
+        public Brand valueFromUser() {
+            return readEnumValue(Brand.values());
+        }
+
+        @Override
+        public void userSetter(Car car) {
+            car.setBrand(this.valueFromUser());
         }
     },
     MODEL(Car::getModel) {
         @Override
         @SneakyThrows
-        public String valueFromUser()  {
+        public String valueFromUser() {
             return readString("Enter model");
+        }
+
+        @Override
+        public void userSetter(Car car) {
+            car.setModel(this.valueFromUser());
         }
     },
     YEAR_OF(Car::getYearOf) {
         @Override
         @SneakyThrows
-        public String valueFromUser()  {
-            return askStringWhileDoesNotMatchToPattern(
+        public Integer valueFromUser() {
+            return Integer.valueOf(askStringWhileDoesNotMatchToPattern(
                     Pattern.compile("^\\d{4}$"),
-                    "Enter year");
+                    "Enter year"));
+        }
+
+        @Override
+        public void userSetter(Car car) {
+            car.setYearOf(this.valueFromUser());
         }
     },
     MILEAGE(Car::getMileage) {
         @Override
         @SneakyThrows
-        public String valueFromUser()  {
-            return String.valueOf(Read.readPositiveNumber("Enter mileage"));
+        public Integer valueFromUser() {
+            return Read.readPositiveNumber("Enter mileage");
+        }
+
+        @Override
+        public void userSetter(Car car) {
+            car.setMileage(this.valueFromUser());
         }
     },
     STATE_NUMBER(Car::getStateNumber) {
         @Override
         @SneakyThrows
-        public String valueFromUser()  {
+        public String valueFromUser() {
             return askStringWhileDoesNotMatchToPattern(
                     Pattern.compile("^(?i)[A-Z\\dАВЕIКМНОРСТХ]{6,8}$"),
                     "Enter state number(number_plate)");
+        }
+
+        @Override
+        public void userSetter(Car car) {
+            car.setStateNumber(this.valueFromUser());
         }
     },
 
     ADDITIONAL_DESCRIPTION(Car::getAdditionalDescription) {
         @Override
         @SneakyThrows
-        public String valueFromUser()  {
+        public String valueFromUser() {
             return Read.read("Enter additional description");
+        }
+
+        @Override
+        public void userSetter(Car car) {
+            car.setAdditionalDescription(this.valueFromUser());
         }
     };
 
-    public abstract String valueFromUser();
+    public abstract <T> T valueFromUser();
+
+    public abstract void userSetter(Car car);
 
     final Function<Car, Object> getter;
 
