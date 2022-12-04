@@ -9,9 +9,7 @@ import org.carcrud.model.FuelType;
 import org.utils.exception.ExitException;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -31,20 +29,19 @@ public class CarController {
     public static HashMap<CarField, Consumer<Car>> setters = new HashMap<>();
 
     static {
-        setters.put(CarField.VIN, car -> car.setVIN(CarField.VIN.getValueFromUser().get()));
-        setters.put(CarField.FUEL_TYPE, car -> car.setFuelType(FuelType.valueOf(CarField.FUEL_TYPE.getValueFromUser().get())));
-        setters.put(CarField.BRAND, car -> car.setBrand(Brand.valueOf(CarField.BRAND.getValueFromUser().get())));
-        setters.put(CarField.MODEL, car -> car.setModel(CarField.MODEL.getValueFromUser().get()));
-        setters.put(CarField.YEAR_OF, car -> car.setYearOf(Integer.parseInt(CarField.YEAR_OF.getValueFromUser().get())));
-        setters.put(CarField.MILEAGE, car -> car.setMileage(Integer.parseInt(CarField.MILEAGE.getValueFromUser().get())));
-        setters.put(CarField.STATE_NUMBER, car -> car.setStateNumber(CarField.STATE_NUMBER.getValueFromUser().get()));
-        setters.put(CarField.ADDITIONAL_DESCRIPTION, car -> car.setAdditionalDescription(CarField.ADDITIONAL_DESCRIPTION.getValueFromUser().get()));
+        setters.put(CarField.VIN, car -> car.setVIN(CarField.VIN.valueFromUser()));
+        setters.put(CarField.FUEL_TYPE, car -> car.setFuelType(FuelType.valueOf(CarField.FUEL_TYPE.valueFromUser())));
+        setters.put(CarField.BRAND, car -> car.setBrand(Brand.valueOf(CarField.BRAND.valueFromUser())));
+        setters.put(CarField.MODEL, car -> car.setModel(CarField.MODEL.valueFromUser()));
+        setters.put(CarField.YEAR_OF, car -> car.setYearOf(Integer.parseInt(CarField.YEAR_OF.valueFromUser())));
+        setters.put(CarField.MILEAGE, car -> car.setMileage(Integer.parseInt(CarField.MILEAGE.valueFromUser())));
+        setters.put(CarField.STATE_NUMBER, car -> car.setStateNumber(CarField.STATE_NUMBER.valueFromUser()));
+        setters.put(CarField.ADDITIONAL_DESCRIPTION, car -> car.setAdditionalDescription(CarField.ADDITIONAL_DESCRIPTION.valueFromUser()));
     }
 
     public static void start() {
         log.info("Car controller started working");
         try {
-            repository.create(new Car("12345678901234567", FuelType.GASOLINE, Brand.AUDI, "modwsl", 1235, 7458, "45sdfs5", "sda"));
             while (true){
                 workWithCars();
             }
@@ -94,6 +91,7 @@ public class CarController {
     private void create() {
         Car car = new Car();
         setters.values().forEach(setter -> setter.accept(car));
+        repository.create(car);
         log.info(car + "is added to table if not exists");
     }
 
@@ -111,7 +109,7 @@ public class CarController {
                         .split("\\s")).map(Integer::parseInt).toList();
         return Arrays.stream(CarField.values())
                 .filter(field -> indexes.contains(field.ordinal()))
-                .collect(Collectors.toMap(field -> field.name().toLowerCase(), field -> field.getValueFromUser().get()));
+                .collect(Collectors.toMap(field -> field.name().toLowerCase(), CarField::valueFromUser));
     }
 
 
