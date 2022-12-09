@@ -1,0 +1,14 @@
+23:28:27.777 INFO  - Car controller started working
+23:28:56.744 INFO  - Car(s) is(are) updated if exist(s)
+23:29:23.550 INFO  - Car(s) is(are) deleted if exists
+23:29:32.346 INFO  - Car controller finished working
+21:24:31.201 INFO  - Car controller started working
+21:25:02.736 INFO  - Car(VIN=2312123265asd45as, fuelType=ETHANOL, brand=NISSAN, model=121, yearOf=4565, mileage=12, stateNumber=54asd4, additionalDescription=121)is added to table if not exists
+21:25:07.417 INFO  - Car controller finished working
+21:26:21.480 INFO  - Car controller started working
+21:26:50.163 INFO  - Car(VIN=4545lkjhgfdsaqwre, fuelType=ETHANOL, brand=INFINITI, model=565, yearOf=4554, mileage=32, stateNumber=51234a, additionalDescription=asddas)is added to table if not exists
+21:27:35.339 INFO  - Car controller started working
+21:28:14.108 INFO  - Car(VIN=4545454545asdasda, fuelType=ETHANOL, brand=KAWASAKI, model=56wed, yearOf=4454, mileage=5454, stateNumber=asd112, additionalDescription=4545)is added to table if not exists
+21:28:41.702 INFO  - Car controller started working
+21:29:15.946 INFO  - Car(VIN=tryufgh7465teg45d, fuelType=ETHANOL, brand=CITROEN, model=q132, yearOf=4545, mileage=454, stateNumber=444asd, additionalDescription=4545wq4ee)is added to table if not exists
+21:29:48.430 INFO  - Car(s) is(are) deleted if exists
